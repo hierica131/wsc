@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>遊戲宇宙 - GAME WORLD</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* ===== 全局設定 ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0a12;
+      --bg-card: #12121f;
+      --neon-green: #39ff14;
+      --neon-blue: #00f3ff;
+      --neon-pink: #ff00ff;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c0;
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 1rem 5%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 243, 255, 0.2);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--neon-green);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--neon-green);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* 手機版選單隱藏 */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      background: linear-gradient(rgba(10, 10, 18, 0.8), rgba(10, 10, 18, 0.9)),
+                  url('https://picsum.photos/1920/1080?random=1') center/cover no-repeat;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-title);
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+      color: var(--bg-dark);
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+    }
+
+    /* ===== 遊戲推薦區塊 ===== */
+    .games-section {
+      padding: 5rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--neon-green);
+      text-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .game-card {
+      background: var(--bg-card);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(57, 255, 20, 0.1);
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(57, 255, 20, 0.3);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .game-info {
+      padding: 1.5rem;
+    }
+
+    .game-info h3 {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--neon-blue);
+    }
+
+    .game-info p {
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .game-button {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      border: 2px solid var(--neon-green);
+      color: var(--neon-green);
+      font-weight: 500;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .game-button:hover {
+      background: var(--neon-green);
+      color: var(--bg-dark);
+      box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+    }
+
+    /* ===== 新聞區塊 ===== */
+    .news-section {
+      padding: 5rem 5%;
+      background: var(--bg-card);
+    }
+
+    .news-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .news-item {
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      border-radius: 10px;
+      border-left: 4px solid var(--neon-pink);
+      transition: transform 0.3s ease;
+    }
+
+    .news-item:hover {
+      transform: translateX(5px);
+    }
+
+    .news-item h3 {
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--neon-pink);
+    }
+
+    .news-date {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-item p {
+      color: var(--text-secondary);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0a0a12 100%);
+      padding: 3rem 5%;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--neon-blue);
+    }
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* ===== 手機版回應式設計 ===== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .cta-button {
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+      }
+
+      .game-info h3 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">🎮 遊戲宇宙</div>
+      <nav>
+        <ul>
+          <li><a href="#home">首頁</a></li>
+          <li><a href="#games">遊戲推薦</a></li>
+          <li><a href="#news">新聞</a></li>
+          <li><a href="#about">關於我們</a></li>
+          <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>探索最強遊戲世界</h1>
+      <p>發現最新最熱門的遊戲，體驗極致電競樂趣，加入百萬玩家的世界！</p>
+      <a href="#games" class="cta-button">立即開始</a>
+    </div>
+  </section>
+
+  <!-- 遊戲推薦區塊 -->
+  <section class="games-section" id="games">
+    <h2 class="section-title">熱門遊戲推薦</h2>
+    <div class="games-grid">
+      <!-- 遊戲卡片 1 -->
+      <div class="game-card">
+        <img src="https://picsum.photos/400/300?random=2" alt="遊戲 1" />
+        <div class="game-info">
+          <h3>魔幻戰爭</h3>
+          <p>體驗史詩級的魔幻戰鬥，選擇你的英雄，帶領軍隊征服敵對國度。開放世界多人線上角色扮演遊戲。</p>
+          <a href="#" class="game-button">了解更多</a>
+        </div>
+      </div>
+
+      <!-- 遊戲卡片 2 -->
+      <div class="game-card">
+        <img src="https://picsum.photos/400/300?random=3" alt="遊戲 2" />
+        <div class="game-info">
+          <h3>速度極限</h3>
+          <p>超真實賽車模擬體驗，在世界各地馳騁。升級你的愛車，與其他玩家競速爭奪冠軍寶座。</p>
+          <a href="#" class="game-button">了解更多</a>
+        </div>
+      </div>
+
+      <!-- 遊戲卡片 3 -->
+      <div class="game-card">
+        <img src="https://picsum.photos/400/300?random=4" alt="遊戲 3" />
+        <div class="game-info">
+          <h3>太空冒險</h3>
+          <p>探索無垠宇宙，發現新星球，建立太空站。戰略與探索並重的科幻策略遊戲，帶領你的文明走向榮耀。</p>
+          <a href="#" class="game-button">了解更多</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新遊戲新聞 -->
+  <section class="news-section" id="news">
+    <div class="news-container">
+      <h2 class="section-title">最新遊戲新聞</h2>
+      <div class="news-list">
+        <div class="news-item">
+          <h3>《魔幻戰爭》更新版本震撼登場</h3>
+          <div class="news-date">2026 年 5 月 1 日</div>
+          <p>全新地圖、英雄角色和 PVP 模式正式上線，玩家可體驗更刺激的戰鬥樂趣。</p>
+        </div>
+
+        <div class="news-item">
+          <h3>電競_world 錦標賽報名熱烈進行中</h3>
+          <div class="news-date">2026 年 4 月 28 日</div>
+          <p>總獎金超過 1000 萬港元，全球頂尖戰隊將在這裏一決高下，報名截止日為 5 月 15 日。</p>
+        </div>
+
+        <div class="news-item">
+          <h3>《速度極限》手機版正式發佈</h3>
+          <div class="news-date">2026 年 4 月 25 日</div>
+          <p>隨時隨地體驗極速競賽，手機版獨家優化操作介面，支援多人線上連線對戰。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="Twitter">🐦</a>
+        <a href="#" title="YouTube">📺</a>
+        <a href="#" title="Discord">💬</a>
+      </div>
+      <p class="copyright">© 2026 遊戲宇宙 GAME WORLD. 版權所有。</p>
+    </div>
+  </footer>
+</body>
+</html>
